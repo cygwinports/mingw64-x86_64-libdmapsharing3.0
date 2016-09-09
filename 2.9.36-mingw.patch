@@ -1,0 +1,27 @@
+--- origsrc/libdmapsharing-2.9.36/libdmapsharing/dmap-mdns-browser-dnssd.c	2015-10-25 20:30:45.000000000 -0500
++++ src/libdmapsharing-2.9.36/libdmapsharing/dmap-mdns-browser-dnssd.c	2016-09-09 13:47:40.787240400 -0500
+@@ -26,7 +26,12 @@
+ #include <errno.h>
+ #include <glib.h>
+ #include <glib-object.h>
++#ifdef _WIN32
++#define _WIN32_WINNT 0x0600
++#include <ws2tcpip.h>
++#else
+ #include <arpa/inet.h>
++#endif
+ 
+ #include "dmap-mdns-browser.h"
+ 
+--- origsrc/libdmapsharing-2.9.36/libdmapsharing/dmap-mdns-publisher-dnssd.c	2015-02-07 19:38:48.000000000 -0600
++++ src/libdmapsharing-2.9.36/libdmapsharing/dmap-mdns-publisher-dnssd.c	2016-09-09 13:47:49.019413600 -0500
+@@ -22,7 +22,9 @@
+ #include <string.h>
+ #include <glib.h>
+ #include <dns_sd.h>
++#ifndef _WIN32
+ #include <arpa/inet.h>
++#endif
+ 
+ #include "dmap-mdns-publisher.h"
+ 

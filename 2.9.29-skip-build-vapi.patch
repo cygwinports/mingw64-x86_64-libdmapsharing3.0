@@ -1,0 +1,39 @@
+Something is seriously wrong with the procedures in vala/Makefile.am
+
+--- origsrc/libdmapsharing-2.9.29/configure.ac	2014-09-01 13:57:32.000000000 -0500
++++ src/libdmapsharing-2.9.29/configure.ac	2015-01-14 17:36:19.473037000 -0600
+@@ -355,7 +355,7 @@ AM_CONDITIONAL(HAVE_VALAC, test -x "$VAL
+ AC_PATH_PROG(VALA_GEN_INTROSPECT, vala-gen-introspect)
+ AC_PATH_PROG(VAPIGEN, vapigen)
+ dnl GOBJECT_INTROSPECTION_CHECK sets found_introspection.
+-AM_CONDITIONAL(BUILD_VAPI, test -n "$VALA_GEN_INTROSPECT" -a -n "$VAPIGEN" -a xyes = x"$found_introspection")
++AM_CONDITIONAL(BUILD_VAPI, false)
+ if ! test -n "$VALA_GEN_INTROSPECT" -a -n "$VAPIGEN" -a xyes = x"$found_introspection"; then
+ 	AC_WARN([will not build vapi])
+ fi
+--- origsrc/libdmapsharing-2.9.29/tests/Makefile.am	2014-09-01 13:55:38.000000000 -0500
++++ src/libdmapsharing-2.9.29/tests/Makefile.am	2015-01-14 17:40:42.548943400 -0600
+@@ -60,19 +60,19 @@ BUILT_SOURCES = dacplisten.stamp dpapvie
+ endif
+ 
+ dacplisten.stamp: $(dacplisten_VALASOURCES)
+-	$(VALAC) --vapidir=../vala --pkg gee-0.8 --pkg gstreamer-1.0 --pkg libdmapsharing-3.0 --pkg libsoup-2.4 --pkg gio-2.0 --pkg avahi-gobject  $^ -C
++	$(VALAC) --vapidir=$(top_srcdir)/vala --pkg gee-0.8 --pkg gstreamer-1.0 --pkg libdmapsharing-3.0 --pkg libsoup-2.4 --pkg gio-2.0 --pkg avahi-gobject  $^ -C
+ 	touch $@
+ 
+ dpapview.stamp: $(dpapview_VALASOURCES)
+-	$(VALAC) --vapidir=../vala --pkg gee-0.8 --pkg gtk+-2.0 --pkg gstreamer-1.0 --pkg libdmapsharing-3.0 --pkg libsoup-2.4 --pkg gio-2.0 --pkg avahi-gobject $^ -C
++	$(VALAC) --vapidir=$(top_srcdir)/vala --pkg gee-0.8 --pkg gtk+-2.0 --pkg gstreamer-1.0 --pkg libdmapsharing-3.0 --pkg libsoup-2.4 --pkg gio-2.0 --pkg avahi-gobject $^ -C
+ 	touch $@
+ 
+ dmapcopy.stamp: $(dmapcopy_VALASOURCES)
+-	$(VALAC) --vapidir=../vala --pkg gee-0.8 --pkg gstreamer-1.0 --pkg libdmapsharing-3.0 --pkg libsoup-2.4 --pkg gio-2.0 --pkg avahi-gobject $^ -C
++	$(VALAC) --vapidir=$(top_srcdir)/vala --pkg gee-0.8 --pkg gstreamer-1.0 --pkg libdmapsharing-3.0 --pkg libsoup-2.4 --pkg gio-2.0 --pkg avahi-gobject $^ -C
+ 	touch $@
+ 
+ dmapserve.stamp: $(dmapserve_VALASOURCES)
+-	$(VALAC) --vapidir=../vala --pkg gee-0.8 --pkg gstreamer-1.0 --pkg libdmapsharing-3.0 --pkg libsoup-2.4 --pkg gio-2.0 --pkg avahi-gobject $^ -C
++	$(VALAC) --vapidir=$(top_srcdir)/vala --pkg gee-0.8 --pkg gstreamer-1.0 --pkg libdmapsharing-3.0 --pkg libsoup-2.4 --pkg gio-2.0 --pkg avahi-gobject $^ -C
+ 	touch $@
+ endif
+ 

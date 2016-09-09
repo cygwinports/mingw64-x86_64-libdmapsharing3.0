@@ -1,0 +1,27 @@
+CROSS_HOST="x86_64-w64-mingw32"
+inherit cross gnome2
+
+NAME="mingw64-x86_64-libdmapsharing3.0"
+VERSION=2.9.36
+RELEASE=1
+CATEGORY="Devel"
+SUMMARY="GNOME DAAP/DPAP library for Win64 toolchain"
+DESCRIPTION="libdmapsharing is a library you may use to access and share DMAP
+(DAAP & DPAP) content. The library is written in C using GObject and libsoup."
+HOMEPAGE="http://www.flyn.org/projects/libdmapsharing/"
+SRC_URI="http://www.flyn.org/projects/libdmapsharing/libdmapsharing-${VERSION}.tar.gz"
+SRC_DIR="libdmapsharing-${VERSION}"
+PATCH_URI="
+	2.9.14-no-undefined.patch
+	2.9.29-skip-build-vapi.patch
+	2.9.36-mingw.patch
+"
+
+DIFF_EXCLUDES="dmap-config.h"
+
+CYGCONF_ARGS="--with-mdns=dns_sd as_cv_unaligned_access=yes"
+
+src_install() {
+	cd ${B}
+	cyginstall dist_vapi_DATA=
+}
